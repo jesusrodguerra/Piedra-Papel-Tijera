@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/698d8e9fef.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Londrina+Solid:wght@100;300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="estilos.css">
+    <title>Document</title>
+</head>
+<body>
+
+    <div class="contenedor">
+        <h1>Piedra, Papel o Tijera</h1>
+    
+        <div id="marcador">
+            <div id="marcador-contenedor">
+                <div id="jugador_jugada" class="marcador-jugada">
+                    <div class="label">Jugador</div>
+                    <span id="jugador"></span>
+                </div>
+                
+                <div id="bot_jugada" class="marcador-jugada">
+                    <div class="label">Bot</div>
+                    <span id="bot"></span> 
+                </div>
+            </div>
+            <div class="puntaje">
+                <p> Ganaste: <span id="user-score">0</span> </p>
+                <p> Perdiste: <span id="bot-score">0</span> </p>
+                <p> Empate: <span id="empate-score">0</span> </p>
+            </div>
+        </div>
+    
+        <div class="opciones">
+            <div id="rock" class="border">
+                <i class="far fa-hand-rock"></i>
+            </div>
+            <div id="paper" class="border">
+                <i class="far fa-hand-paper"></i>
+            </div>
+            <div id="tijera" class="border">
+                <i class="far fa-hand-scissors"></i>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
