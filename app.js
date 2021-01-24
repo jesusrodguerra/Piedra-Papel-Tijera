@@ -1,127 +1,112 @@
-let jugadorScore = 0;
-let botScore = 0;
-let empateScore = 0;
-const jugador_jugada = document.getElementById('jugador');
-const bot_jugada = document.getElementById('bot');
-const userScore_span = document.getElementById('user-score');
-const botScore_span = document.getElementById('bot-score');
-const empate_span = document.getElementById('empate-score');
-const scoreBoard = document.getElementById('marcador');
-const result_div = document.querySelector('.result p');
-const piedra_div = document.getElementById('rock');
-const papel_div = document.getElementById('paper');
-const tijera_div = document.getElementById('tijera');
+const piedra = document.getElementById('piedra');
+const papel = document.getElementById('papel');
+const tijera = document.getElementById('tijera');
+const divGanaste = document.getElementById('user-score');
+const divEmpate = document.getElementById('empate-score');
+const divPerdiste = document.getElementById('bot-score');
 
-function bot(){
-    const opciones = ['piedra', 'papel', 'tijera'];
-    const aleatorio = Math.random() * (3);
-    const numero = Math.floor(aleatorio)
-    const bot_jugada = opciones[numero]
+let resultado = '';
+let ganaste = 0;
+let perdiste = 0;
+let empate = 0;
+
     
-    return bot_jugada
+function botJuega() {
+    const jugadas = ['piedra', 'papel', 'tijera'];
+    const numeroAleatorio = Math.random() * (3)
+    const numero = Math.floor(numeroAleatorio)
+    const botJugada = jugadas[numero]
+
+    if(botJugada === 'piedra') {
+        document.getElementById('bot').setAttribute('class', 'far fa-hand-rock')
+
+    } else if(botJugada === 'papel') {
+        document.getElementById('bot').setAttribute('class', 'far fa-hand-paper')
+
+    } else {
+        document.getElementById('bot').setAttribute('class', 'far fa-hand-scissors')
+
+    }
+
+    return botJugada
 }
 
-function ganar(opcionJugador, opcionBot){
-    jugadorScore++;
-    userScore_span.innerHTML = jugadorScore
 
-    if(opcionJugador === 'piedra'){
-        jugador_jugada.className = 'far fa-hand-rock';
-    } else if(opcionJugador === 'papel'){
-        jugador_jugada.className = 'far fa-hand-paper';
-    } else {
-        jugador_jugada.className = 'far fa-hand-scissors'
-    }
+function jugar(jugador, bot) {
 
-    if(opcionBot === 'piedra'){
-        bot_jugada.className = 'far fa-hand-rock';
-    } else if(opcionBot=== 'papel'){
-        bot_jugada.className = 'far fa-hand-paper';
-    } else {
-        bot_jugada.className = 'far fa-hand-scissors';
-    }
+    const jugadorJuega = jugador;
+    const botJuega = bot;
 
-    console.log(opcionJugador)
-}
+    console.log(jugadorJuega + botJuega)
 
-function perder(opcionJugador, opcionBot){
-    botScore++
-    botScore_span.innerHTML = botScore
-
-    if(opcionJugador === 'piedra'){
-        jugador_jugada.className = 'far fa-hand-rock';
-    } else if(opcionJugador === 'papel'){
-        jugador_jugada.className = 'far fa-hand-paper';
-    } else {
-        jugador_jugada.className = 'far fa-hand-scissors'
-    }
-
-    if(opcionBot === 'piedra'){
-        bot_jugada.className = 'far fa-hand-rock';
-    } else if(opcionBot=== 'papel'){
-        bot_jugada.className = 'far fa-hand-paper';
-    } else {
-        bot_jugada.className = 'far fa-hand-scissors';
-    }
-
-    console.log(typeof opcionJugador)
-}
-
-function empate(opcionJugador, opcionBot){
-    empateScore++
-    empate_span.innerHTML = empateScore
-
-    if(opcionJugador === 'piedra'){
-        jugador_jugada.className = 'far fa-hand-rock';
-    } else if(opcionJugador === 'papel'){
-        jugador_jugada.className = 'far fa-hand-paper';
-    } else {
-        jugador_jugada.className = 'far fa-hand-scissors'
-    }
-
-    if(opcionBot === 'piedra'){
-        bot_jugada.className = 'far fa-hand-rock';
-    } else if(opcionBot=== 'papel'){
-        bot_jugada.className = 'far fa-hand-paper';
-    } else {
-        bot_jugada.className = 'far fa-hand-scissors';
-    }
-    console.log(opcionJugador)
-}
-
-function game(opcion){
-    const bot_juega = bot();
-    const usuario_juega = opcion
-
-    switch(usuario_juega + bot_juega){
+    switch (jugadorJuega + botJuega) {
+        case 'piedrapiedra':
+        case 'tijeratijera':
+        case 'papelpapel':
+            resultado = 'empate'
+            result(resultado);
+            break;
         
         case 'piedratijera':
-        case 'papelpiedra':
         case 'tijerapapel':
-            ganar(usuario_juega, bot_juega)
-            console.log('Jugador Gana')
-        break;
-        case 'piedrapapel':
+        case 'papelpiedra':
+            resultado = 'ganaste'
+            result(resultado);
+            break;
+        
         case 'tijerapiedra':
         case 'papeltijera':
-            perder(usuario_juega, bot_juega)
-            console.log('Bot Gana')
-        break;
-        case 'piedrapiedra':
-        case 'papelpapel':
-        case 'tijeratijera':
-            empate(usuario_juega, bot_juega)
-            console.log('Empate')
-        break;
+        case 'piedrapapel':
+            resultado = 'perdiste'
+            result(resultado);
+            break;
+    
+        default:
+            break;
+    }
+}
+
+function result(resultado) {
+
+    if(resultado === 'ganaste') {
+        ganaste++;
+        divGanaste.innerHTML = ganaste;
+        return
+    } else if(resultado === 'perdiste') {
+        perdiste++
+        divPerdiste.innerHTML = perdiste
+        return
+    } else if(resultado === 'empate') {
+        empate++
+        divEmpate.innerHTML = empate
+        return 
     }
 
-    console.log(`${usuario_juega} vs ${bot_juega}`)
 }
 
-function botones(){
-    piedra_div.addEventListener('click', () => game('piedra'));
-    papel_div.addEventListener('click', () => game('papel'));
-    tijera_div.addEventListener('click', () => game('tijera'));
-}
+piedra.addEventListener('click', ()=> {
+    const jugador_jugada = piedra.getAttribute('id');
 
-botones();
+    document.getElementById('jugador').setAttribute( "class", "far fa-hand-rock")
+
+    const bot = botJuega()
+    jugar(jugador_jugada, bot)
+})
+
+papel.addEventListener('click', ()=> {
+    const jugador_jugada = papel.getAttribute('id');
+
+    document.getElementById('jugador').setAttribute( "class", "far fa-hand-paper")
+
+    const bot = botJuega()
+    jugar(jugador_jugada, bot)
+})
+
+tijera.addEventListener('click', ()=> {
+    const jugador_jugada = tijera.getAttribute('id');
+
+    document.getElementById('jugador').setAttribute("class", "far fa-hand-scissors")
+
+    const bot = botJuega()
+    jugar(jugador_jugada, bot)
+})
